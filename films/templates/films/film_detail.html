@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/filmDetails.js' %}" ></script>
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Episode {{ film.episode }} : {{ film.title }} </h1>
+    <input type="hidden" id="filmId" value="{{film.id}}"/>
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'films' %}">Films</a>
+      </li>
+      <li class="breadcrumb-item active">Details</li>
+    </ol>
+
+    <div class="row">
+      <div class="col-md-8">
+        <img class="img-fluid" src="{% static 'images/logo.png' %}" alt="">
+      </div>
+
+      <div class="col-md-4">
+        <h3 class="my-3">Description</h3>
+        <p>{{film.description}}</p>
+        <h3 class="my-3">Details</h3>
+        <ul>
+          <li><strong>Director:</strong>{{ film.director }}</li>
+          <li><strong>Producer:</strong>{{ film.producer }}</li>
+          <li><strong>Date:</strong>{{ film.release_date }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
