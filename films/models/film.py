@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse  # To generate URLS by reversing URL patterns
+from .character import Character
 
 class Film(models.Model):
     title = models.CharField(max_length=100)
@@ -8,6 +9,7 @@ class Film(models.Model):
     director= models.CharField(max_length=100)    
     producer = models.CharField(max_length=100)
     release_date = models.CharField(max_length=100)
+    character = models.ManyToManyField(Character, blank=True, help_text="Select a character for this film")
 
     class Meta:
         ordering = ['title']
