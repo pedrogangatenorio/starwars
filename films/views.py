@@ -22,7 +22,6 @@ class FilmDetailView(generic.DetailView):
 
 def getSession(request):
 	sessions = {}
-	print('hola')
 	try:
 		sessions = filmservice.getSessions();
 	except:

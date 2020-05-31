@@ -99,7 +99,7 @@ document.addEventListener("click", function (e) {
 let title = sessionStorage.getItem('title') != null ? JSON.parse(sessionStorage.getItem('title')) : [];
 let director = sessionStorage.getItem('director') != null ? JSON.parse(sessionStorage.getItem('director')) : [];
 let producer = sessionStorage.getItem('producer') != null ? JSON.parse(sessionStorage.getItem('producer')) : [];
-console.log(title)
+
 window.onload = function(){
   autocomplete(document.getElementById("id_title__icontains"), title);
   autocomplete(document.getElementById("id_director__icontains"), director);
