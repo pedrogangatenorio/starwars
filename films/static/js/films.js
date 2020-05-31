@@ -16,7 +16,8 @@ $(document).ready(function(){
         $(this).remove();
     });
 
-    updateSession()
+    updateSession();
+    updateSessionSuggest();
 });
 
 function updateSession(){
@@ -39,4 +40,23 @@ function updateDiv(element){
         a2.appendChild(document.createTextNode( current[l - i]['page']));
         document.getElementById("lastvisits").appendChild(a2);
     }    
+}
+
+function updateSessionSuggest(){
+    let session = sessionStorage.getItem('title') != null ? JSON.parse(sessionStorage.getItem('title')) : [];
+
+    if (session === undefined || session.length == 0) {
+        request_url = '/films/getSession'
+        $.ajax({
+            url: request_url,
+            success: function(data){
+                sessionStorage.setItem("title", JSON.stringify(data['title']));  
+                sessionStorage.setItem("director", JSON.stringify(data['director']));           
+                sessionStorage.setItem("producer", JSON.stringify(data['producer']));
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });  
+    }
 }

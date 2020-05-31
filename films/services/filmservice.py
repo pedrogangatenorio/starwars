@@ -21,3 +21,11 @@ def addImages(context):
 	context['images'] = CharacterImage.objects.all();
 	context['carrusel_size'] = context['images'].order_by('id').values_list('id', flat=True);
 	return context;
+
+def getSessions():
+	res = {};
+	films = Film.objects.all();
+	res['title'] = list(films.values_list('title', flat=True).distinct());
+	res['director'] = list(films.values_list('director', flat=True).distinct());
+	res['producer'] = list(films.values_list('producer', flat=True).distinct());
+	return res;
