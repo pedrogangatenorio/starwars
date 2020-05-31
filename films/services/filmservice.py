@@ -6,18 +6,18 @@ from films.models.characterImage import CharacterImage
 from starwars.settings import APIURL, APIKEYRESULTS, FILMENTITY, PEOPLENTITY
 
 def getEntityModel(entity):
-	url = APIURL + entity 
-	r = requests.get(url)
-	entities = r.json()
+	url = APIURL + entity;
+	r = requests.get(url);
+	entities = r.json();
 
 	for entityTMP in entities[APIKEYRESULTS]:
-		tmp = Film.create_from_j(json.loads(json.dumps(entityTMP))) if entity == FILMENTITY else Character.create_from_j(json.loads(json.dumps(entityTMP)))
+		tmp = Film.create_from_j(json.loads(json.dumps(entityTMP))) if entity == FILMENTITY else Character.create_from_j(json.loads(json.dumps(entityTMP)));
 		if entity == FILMENTITY and not Film.objects.filter(episode = tmp.episode).exists():
-			tmp.save()
+			tmp.save();
 		elif entity == PEOPLENTITY and not Character.objects.filter(name = tmp.name).exists():
-			tmp.save()
+			tmp.save();
 
 def addImages(context):
 	context['images'] = CharacterImage.objects.all();
-	context['carrusel_size'] = context['images'].order_by('id').values_list('id', flat=True)
+	context['carrusel_size'] = context['images'].order_by('id').values_list('id', flat=True);
 	return context;

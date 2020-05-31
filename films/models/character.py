@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse  # To generate URLS by reversing URL patterns
+from django.urls import reverse
 from .characterImage import CharacterImage
 from django.utils.translation import gettext_lazy as _
 
