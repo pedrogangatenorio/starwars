@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/film.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}">
+  <script type="text/javascript" src="{% static 'js/films.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'js/autocomplete.js' %}" ></script>
+
+  <header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        {% for id in carrusel_size %}
+          <li data-target="#carouselExampleIndicators" data-slide-to="{{id}}"></li>
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active" style="background-image: url('/static/images/logo.png')">
+          <div class="carousel-caption d-none d-md-block">
+            <p>Star Wars</p>
+          </div>
+        </div>
+        {% for image in images %}
+          <div class="carousel-item" style="background-image: url('{{image.getRouteImage}}')">
+            <div class="carousel-caption d-none d-md-block">
+              <p>{{image.nombre}}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header>
+
+  <div id="messages" >
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+
+  <div class="container">
+    <div class="card mb-4">
+      <h5 class="card-header">Search</h5>
+      <div class="card-body">
+        <form method='GET'>
+         {{ filter.form | crispy }}
+         <button type="submit" class='btn btn-primary'>Search</button>
+       </form>
+      </div>
+    </div>
+
+    <div class="row">
+      {% for film in filter.qs %}
+      <div class="item col-lg-4 mb-4">
+        <div class="card h-100">
+          <a href="{{ film.get_absolute_url }}"><h4 class="card-header nombres">{{film.title}} {{ film.getPuntuacion }}</h4></a> 
+          <div class="card-body show-read">
+            <p class="card-text show-read-more">{{film.description}}</p>
+          </div>
+          {% if user.is_authenticated %}
+            <div class="card-footer">
+              <button onclick="abrir_modal_creacion_score('{% url 'films:create_score' film.id %}')" class="btn btn-success" {% if request.user.id in film.votantes %} disabled {% endif %}>Vota</button> 
+              <button onclick="abrir_modal_edicion('{% url 'films:film-update' film.id %}')" class="btn btn-primary">Editar</button>
+              <button onclick="abrir_modal_eliminacion('{% url 'films:film_delete' film.id %}')" class="btn btn-danger">Eliminar</button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>   
+  
+  <div class="modal fade" id="creacion" role="dialog">
+
+  </div>
+  
+  <div class="modal fade" id="edicion" role="dialog">
+  
+  </div>
+
+  <div class="modal fade" id="eliminacion" role="dialog">
+  
+  </div>
+
+  <div class="modal fade" id="creacion_score" role="dialog">
+  
+  </div>
+  
+{% endblock %}

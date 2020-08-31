@@ -1,0 +1,7 @@
+.show-read-more .more-text{
+    display: none;
+}
+
+.background {
+    background-image: url('./../images/luke.png');
+}

@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'films.apps.FilmsConfig',
     'crispy_forms',
+    'aplicaciones.films',
+    'aplicaciones.localizacion',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'starwars.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,18 +75,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'starwars.wsgi.application'
 
-MEDIA_ROOT = os.path.join(os.path.join(os.path.join(BASE_DIR, 'films') , 'static'), 'images')
+MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, 'static') , 'images')
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'films',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'HOST': 'localhost',
-        'PASSWORD': 'root',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -112,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Es'
 
 TIME_ZONE = 'UTC'
 
@@ -127,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (BASE_DIR,'static')
 IMAGEFOLDER = os.path.join(STATIC_URL, 'images/')
 
 APIURL = 'https://swapi.dev/api/'
